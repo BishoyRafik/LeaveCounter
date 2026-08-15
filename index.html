@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Leave Calculator</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="app">
+
+        <!-- Header -->
+        <header class="app-header">
+            <h1>🏖️ Leave Calculator</h1>
+            <p>Calculate your remaining leave periods</p>
+        </header>
+
+
+        <!-- Calculator Card -->
+        <section class="calculator-card">
+
+            <h2>Work Period</h2>
+
+            <!-- Start Date -->
+            <div class="form-group">
+                <label for="startDate">Work Start Date</label>
+                <input type="date" id="startDate">
+            </div>
+
+
+            <!-- End Date -->
+            <div class="form-group">
+                <label for="endDate">Work End Date</label>
+                <input type="date" id="endDate">
+            </div>
+
+
+            <!-- Work / Leave System -->
+            <div class="schedule">
+
+                <div class="form-group">
+                    <label for="workDays">Work Days</label>
+                    <input type="number" id="workDays" value="14" min="1" step="1">
+                </div>
+
+                <div class="schedule-separator">
+                    →
+                </div>
+
+                <div class="form-group">
+                    <label for="leaveDays">Leave Days</label>
+                    <input type="number" id="leaveDays" value="7" min="1" step="1">
+                </div>
+
+            </div>
+
+            <p id="errorMessage" class="error-message"></p>
+
+            <div class="button-group">
+
+                <button id="calculateBtn" type="button">
+                    Calculate
+                </button>
+
+                <button id="resetBtn" type="button">
+                    Reset
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Results -->
+        <!-- <section class="results" id="results">
+
+            <h2>Your Results</h2>
+
+            <div class="result-card">
+
+                <div class="result-icon">
+                    🏖️
+                </div>
+
+                <div class="result-info">
+                    <span>Leave Periods</span>
+                    <strong id="leaveCount">-</strong>
+                </div>
+
+            </div>
+
+            <div class="result-card">
+
+                <div class="result-icon">
+                    📅
+                </div>
+
+                <div class="result-info">
+                    <span>Next Leave</span>
+                    <strong id="nextLeave">-</strong>
+                </div>
+
+            </div>
+
+            <div class="result-card">
+
+                <div class="result-icon">
+                    ⏳
+                </div>
+
+                <div class="result-info">
+                    <span>Days Until Next Leave</span>
+                    <strong id="daysUntilLeave">-</strong>
+                </div>
+
+            </div>
+
+            <div class="result-card">
+
+                <div class="result-icon">
+                    🏁
+                </div>
+
+                <div class="result-info">
+                    <span>Days Until Work Ends</span>
+                    <strong id="daysUntilEnd">-</strong>
+                </div>
+
+            </div>
+
+        </section> -->
+
+        <!-- Dashboard -->
+        <section class="dashboard" id="results">
+
+            <div class="dashboard-header">
+                <h2>Your Leave Dashboard</h2>
+                <p>Here is your current work and leave summary</p>
+            </div>
+
+
+            <div class="dashboard-grid">
+
+                <!-- Leave Periods -->
+                <div class="dashboard-card primary-card">
+
+                    <div class="dashboard-icon">
+                        🏖️
+                    </div>
+
+                    <div class="dashboard-content">
+                        <span>Leave Periods</span>
+                        <strong id="leaveCount">-</strong>
+                        <small>Available periods</small>
+                    </div>
+
+                </div>
+
+
+                <!-- Next Leave -->
+                <div class="dashboard-card">
+
+                    <div class="dashboard-icon">
+                        📅
+                    </div>
+
+                    <div class="dashboard-content">
+                        <span>Next Leave</span>
+                        <strong id="nextLeave">-</strong>
+                        <small>Upcoming leave</small>
+                    </div>
+
+                </div>
+
+
+                <!-- Days Until Leave -->
+                <div class="dashboard-card">
+
+                    <div class="dashboard-icon">
+                        ⏳
+                    </div>
+
+                    <div class="dashboard-content">
+                        <span>Until Next Leave</span>
+                        <strong id="daysUntilLeave">-</strong>
+                        <small>Time remaining</small>
+                    </div>
+
+                </div>
+
+
+                <!-- Work End -->
+                <div class="dashboard-card">
+
+                    <div class="dashboard-icon">
+                        🏁
+                    </div>
+
+                    <div class="dashboard-content">
+                        <span>Work Ends In</span>
+                        <strong id="daysUntilEnd">-</strong>
+                        <small>Until final work day</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Leave History -->
+        <section class="history-section">
+
+            <div class="history-header">
+                <h2>Leave History</h2>
+                <p>All your calculated leave periods</p>
+            </div>
+
+
+            <div class="history-table-wrapper">
+
+                <table class="history-table">
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="leaveHistoryBody">
+                        <!-- Leave history will be generated by JavaScript -->
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- Calendar -->
+        <section class="calendar-section">
+
+            <div class="calendar-header">
+
+                <div>
+                    <h2>Work Calendar</h2>
+                    <p>View your work and leave schedule</p>
+                </div>
+
+                <div class="calendar-navigation">
+
+                    <button id="prevMonthBtn" type="button" aria-label="Previous month">
+                        ‹
+                    </button>
+
+                    <strong id="calendarMonth">
+                        Month Year
+                    </strong>
+
+                    <button id="nextMonthBtn" type="button" aria-label="Next month">
+                        ›
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="calendar-card">
+
+                <!-- Week Days -->
+                <div class="calendar-weekdays">
+
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                    <div>Sun</div>
+
+                </div>
+
+
+                <!-- Calendar Days -->
+                <div class="calendar-days" id="calendarDays">
+                    <!-- Generated by JavaScript -->
+                </div>
+
+
+                <!-- Legend -->
+                <div class="calendar-legend">
+
+                    <div class="legend-item">
+                        <span class="legend-color work"></span>
+                        <span>Work</span>
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="legend-color leave"></span>
+                        <span>Leave</span>
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="legend-color today"></span>
+                        <span>Today</span>
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="legend-color end"></span>
+                        <span>Work End</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Leave Calculator • Version 1</p>
+        </footer>
+
+    </main>
+
+
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
